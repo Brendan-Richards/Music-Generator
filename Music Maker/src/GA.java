@@ -17,7 +17,7 @@ public class GA {
 
 	private boolean targetReached = false;//flag that tells us when we have found a solution
 	
-	private Individual []population,//holds the current population
+	private Song []population,//holds the current population
 			newPopulation;//used to temporarily store the new population
 	
 	private int maxGenerations = 999;//number of Individuals in the population
@@ -63,14 +63,14 @@ public class GA {
 		
 		int parent1, parent2;
 		
-		newPopulation = new Individual[populationSize];
+		newPopulation = new Song[populationSize];
 		
 		for(int i=0; i<populationSize; i++){
 			
 			parent1 = selectParent();
 			parent2 = selectParent();
 			
-			newPopulation[i] = new Individual(population[parent1], population[parent2]);
+			newPopulation[i] = new Song(population[parent1], population[parent2]);
 			
 			//if the current guys formula is a solution, change our flag variable
 			if(newPopulation[i].fitness == 0){
@@ -97,7 +97,7 @@ public class GA {
 
 	     //get the tournament participants
 	     for(int i=0; i<tourneySize; i++){
-	          tourneyGuys[i] = Individual.rand.nextInt(populationSize);
+	          tourneyGuys[i] = Song.rand.nextInt(populationSize);
 	     }
 	     
 	     parent = 0;
@@ -116,11 +116,11 @@ public class GA {
 //all the individuals are given random formulas
 	private void createInitialPopulation(){
 		
-		population = new Individual[populationSize];
+		population = new Song[populationSize];
 		
 		//uses the individual's no-argument constructor, which makes random formulas
 		for(int i=0; i<populationSize; i++){
-			population[i] = new Individual();
+			population[i] = new Song();
 		}
 	}//createInitialPopulation
 }
