@@ -1,5 +1,5 @@
 
 public class TempoChange {
-    private int bar;
-    private int tempo;
+    public int bar;
+    public int tempo;
 }

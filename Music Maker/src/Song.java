@@ -5,14 +5,22 @@ public class Song {
     //music stuff
     private Part[] parts;
     private int numParts;
-    private int maxParts = 3;
     private float length;
     private TSigChange[] tSigChanges;
+    private int numTSigChanges;
     private TempoChange[] tempoChanges;
+    private int numTempoChanges;
     private int numBars;
-    private int maxBars = 50;
+    
+    public static int maxParts = 3;
+    public static int maxTSigChanges = 3;
+    public static int maxTempoChanges = 3;
+    public static int maxBars = 50;
+    public static int minTempo = 50;
+    public static int maxTempo = 200;
+    public static int maxBeats = 32;
 	
-    protected static Random rand = new Random();	
+    public static Random rand = new Random();	
 	
     //GA stuff
     protected int fitness;
@@ -27,13 +35,29 @@ public class Song {
 //while the 2 argument constructor crosses 2 parents' genes to make a song
 	public Song(){
             numBars = rand.nextInt(maxBars-10)+10;
+            int startTempo = rand.nextInt(maxTempo-minTempo)+minTempo;
+            
+            int bottom = (int)Math.pow(2, (rand.nextInt(3)+2));
+            int top = rand.nextInt(maxBeats)+1;
+            TSig startTSig = new TSig(top, bottom);
+            
+            numTSigChanges = rand.nextInt(maxTSigChanges);
+            tSigChanges = new TSigChange[numTSigChanges];
+            for(int i=0; i<numTSigChanges; i++){
+                tSigChanges[i] = new TSigChange();
+            }
+            
+            numTempoChanges = rand.nextInt(maxTempoChanges);
+            tempoChanges = new TempoChange[numTempoChanges];
+            for(int i=0; i<numTempoChanges; i++){
+                tempoChanges[i] = new TempoChange();
+            }
             
             numParts = rand.nextInt(maxParts-1)+1;
             parts = new Part[numParts];
             for(int i=0; i<numParts; i++){
-                parts[i] = new Part();
-            }
-            
+                parts[i] = new Part(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
+            }    
 	}
 	
 	public Song(Song a, Song b){

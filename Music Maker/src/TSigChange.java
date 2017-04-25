@@ -1,5 +1,5 @@
 
 public class TSigChange {
-    private int bar;
-    private String timeSig;
+    public int bar;
+    public TSig timeSig;
 }
