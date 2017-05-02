@@ -1,9 +1,9 @@
 
-public class Part {
+public class SongPart {
     private Bar[] bars;
     private String instrument;
     
-    public Part(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig){
+    public SongPart(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig){
         bars = new Bar[numBars];
 
         int currTemp = startTempo;
@@ -11,6 +11,7 @@ public class Part {
         
         for(int i=0; i<numBars; i++){
             
+            System.out.println("    making bar " + (i+1) + " of " + numBars);
             //if there is a tempo or time signiture change on this bar, change it
             for(int j=0; j<tempoChanges.length; j++){
                 if(tempoChanges[j].bar == (i+1)) currTemp = tempoChanges[j].tempo;

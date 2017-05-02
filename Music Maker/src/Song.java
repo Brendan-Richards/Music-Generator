@@ -3,7 +3,7 @@ import java.util.Random;
 public class Song {
     
     //music stuff
-    private Part[] parts;
+    private SongPart[] parts;
     private int numParts;
     private float length;
     private TSigChange[] tSigChanges;
@@ -54,9 +54,10 @@ public class Song {
             }
             
             numParts = rand.nextInt(maxParts-1)+1;
-            parts = new Part[numParts];
+            parts = new SongPart[numParts];
             for(int i=0; i<numParts; i++){
-                parts[i] = new Part(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
+                System.out.println("making part " + (i+1) + " of " + numParts);
+                parts[i] = new SongPart(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
             }    
 	}
 	

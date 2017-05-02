@@ -27,19 +27,23 @@ public class GA {
 	
 /////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {
-		
-		while(!done){
-			GA a = new GA();
-			//get the target value from the user
-			a.getTarget();
-            //time the GA run by getting the start and end times
-            long start = System.nanoTime();
-			//run the genetic algorithm
-			a.runGA();
-            
-            long end = System.nanoTime();
-
-		}
+	
+        SoundTesting c = new SoundTesting();
+        c.soundTest();
+        
+//        Song b = new Song();
+        
+//		while(!done){
+//			GA a = new GA();
+//			//get the target value from the user
+//			a.getTarget();
+//            //time the GA run by getting the start and end times
+//            long start = System.nanoTime();
+//			//run the genetic algorithm
+//			a.runGA();
+//            
+//            long end = System.nanoTime();
+//		}
 		
 	}//main
 
