@@ -1,9 +1,9 @@
 
-public class SongPart {
+public class Part {
     private Bar[] bars;
     private String instrument;
     
-    public SongPart(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig){
+    public Part(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig){
         bars = new Bar[numBars];
 
         int currTemp = startTempo;

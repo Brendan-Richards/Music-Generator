@@ -26,12 +26,10 @@ public class GA {
 
 	
 /////////////////////////////////////////////////////////////////////////
-	public static void main(String[] args) {
-	
-        SoundTesting c = new SoundTesting();
-        c.soundTest();
+	public static void main(String[] args) {	
         
-//        Song b = new Song();
+        Song b = new Song();
+        b.play();
         
 //		while(!done){
 //			GA a = new GA();

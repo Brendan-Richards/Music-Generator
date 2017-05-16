@@ -3,7 +3,7 @@ import java.util.Random;
 public class Song {
     
     //music stuff
-    private SongPart[] parts;
+    private Part[] parts;
     private int numParts;
     private float length;
     private TSigChange[] tSigChanges;
@@ -31,7 +31,7 @@ public class Song {
 /////////////////////////////////////////////////////////////
 //constructors:
 //the only difference between the 2 is that 
-//the constructor with no arguments makes a song,
+//the constructor with no arguments makes a random song,
 //while the 2 argument constructor crosses 2 parents' genes to make a song
 	public Song(){
             numBars = rand.nextInt(maxBars-10)+10;
@@ -54,16 +54,21 @@ public class Song {
             }
             
             numParts = rand.nextInt(maxParts-1)+1;
-            parts = new SongPart[numParts];
+            parts = new Part[numParts];
             for(int i=0; i<numParts; i++){
                 System.out.println("making part " + (i+1) + " of " + numParts);
-                parts[i] = new SongPart(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
+                parts[i] = new Part(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
             }    
 	}
 	
 	public Song(Song a, Song b){
 		
 	}
+    
+//plays the song using JFugue
+    public void play(){
+        
+    }
 
 /////////////////////////////////////////////////////////////////
 //this method takes 2 individuals and crosses their 
