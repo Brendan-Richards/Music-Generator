@@ -8,6 +8,8 @@ public class GA {
         
     private static final Scanner keyboard = new Scanner(System.in);
 	
+    private static int maxParts = 3;
+    
 	private int generationCount = 0,//the current generation
 		currentAverageFitness,//the current average fitness of the whole population
 		previousAverageFitness = 1000000,//the average fitness of the previous generation
@@ -28,7 +30,12 @@ public class GA {
 /////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {	
         
-        Song b = new Song();
+        int numParts = Song.rand.nextInt(maxParts)+1;
+        Instrument []insts = new Instrument[numParts];
+        for(int i=0; i<numParts; i++){
+            insts[i] = new Instrument();
+        }
+        Song b = new Song(insts);
         b.play();
         
 //		while(!done){
@@ -122,7 +129,7 @@ public class GA {
 		
 		//uses the individual's no-argument constructor, which makes random formulas
 		for(int i=0; i<populationSize; i++){
-			population[i] = new Song();
+			//population[i] = new Song();
 		}
 	}//createInitialPopulation
 }

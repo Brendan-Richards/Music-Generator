@@ -1,11 +1,11 @@
 
 public class Part {
     private Bar[] bars;
-    private String instrument;
+    private Instrument instrument;
     
-    public Part(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig){
+    public Part(int numBars, TempoChange[] tempoChanges, TSigChange[] tSigChanges, int startTempo, TSig startTSig, Instrument instr){
         bars = new Bar[numBars];
-
+        instrument = instr; 
         int currTemp = startTempo;
         TSig currTSig = new TSig(startTSig.top, startTSig.bottom);
         
@@ -23,7 +23,7 @@ public class Part {
                 }
             }
             
-            bars[i] = new Bar(currTemp, currTSig);
+            bars[i] = new Bar(currTemp, currTSig, instrument);
         }
     }
     

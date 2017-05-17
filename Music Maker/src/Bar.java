@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 
 public class Bar {
-    private ArrayList<OneNote> notes;
+    private ArrayList<Note> notes;
     private TSig tSig;
     private int tempo;
+    private Instrument instrument;
     
-    public Bar(int currTempo, TSig currTSig){
+    public Bar(int currTempo, TSig currTSig, Instrument inst){
+        instrument = inst;
         tempo = currTempo;
         tSig = currTSig;
         notes = new ArrayList();
+       
         makeNotes();
     }
     
@@ -24,31 +27,31 @@ public class Bar {
                 System.out.println();
             }
             while(!found){
-                OneNote temp = new OneNote(tempo, tSig);
+                Note temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                 switch(temp.type){
                     case "whole": {
                         if(canAdd("whole", totalBeats)){ found = true; totalBeats += tSig.bottom; notes.add(temp);  }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                     case "half":{
                         if(canAdd("half", totalBeats)){ found = true; totalBeats += (float)(tSig.bottom/2); notes.add(temp); }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                     case "quarter":{
                         if(canAdd("quarter", totalBeats)){ found = true; totalBeats += (float)(tSig.bottom/4); notes.add(temp); }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                     case "eighth":{
                         if(canAdd("eighth", totalBeats)){ found = true; totalBeats += (float)(tSig.bottom/8); notes.add(temp); }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                     case "sixteenth":{
                         if(canAdd("sixteenth", totalBeats)){ found = true; totalBeats += (float)(tSig.bottom/16); notes.add(temp); }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                     case "thirty-second":{
                         if(canAdd("thirty-second", totalBeats)){ found = true; totalBeats += (float)(tSig.bottom/32); notes.add(temp); }
-                        else temp = new OneNote(tempo, tSig);
+                        else temp = new Note(tempo, tSig, instrument.range, instrument.canPlayChords);
                          break;}
                 }
             }

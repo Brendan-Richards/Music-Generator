@@ -33,7 +33,7 @@ public class Song {
 //the only difference between the 2 is that 
 //the constructor with no arguments makes a random song,
 //while the 2 argument constructor crosses 2 parents' genes to make a song
-	public Song(){
+	public Song(Instrument[] insts){
             numBars = rand.nextInt(maxBars-10)+10;
             int startTempo = rand.nextInt(maxTempo-minTempo)+minTempo;
             
@@ -53,11 +53,11 @@ public class Song {
                 tempoChanges[i] = new TempoChange();
             }
             
-            numParts = rand.nextInt(maxParts-1)+1;
+            numParts = insts.length;
             parts = new Part[numParts];
             for(int i=0; i<numParts; i++){
                 System.out.println("making part " + (i+1) + " of " + numParts);
-                parts[i] = new Part(numBars, tempoChanges, tSigChanges, startTempo, startTSig);
+                parts[i] = new Part(numBars, tempoChanges, tSigChanges, startTempo, startTSig, insts[i]);
             }    
 	}
 	
