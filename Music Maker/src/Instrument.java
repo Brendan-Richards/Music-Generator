@@ -23,7 +23,7 @@ public class Instrument {
             case 2:{
                 name = "trumpet";
                 canPlayChords = false;
-                range = new String[]{"F#3", "D6"};
+                range = new String[]{"Gb3", "D6"};
                 break;
             }
             case 3:{

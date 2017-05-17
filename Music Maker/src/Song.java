@@ -34,7 +34,8 @@ public class Song {
 //the constructor with no arguments makes a random song,
 //while the 2 argument constructor crosses 2 parents' genes to make a song
 	public Song(Instrument[] insts){
-            numBars = rand.nextInt(maxBars-10)+10;
+            //numBars = rand.nextInt(maxBars-10)+10;
+        numBars = 1;
             int startTempo = rand.nextInt(maxTempo-minTempo)+minTempo;
             
             int bottom = (int)Math.pow(2, (rand.nextInt(3)+2));
