@@ -15,7 +15,7 @@ public class Song {
     public static int maxParts = 3;
     public static int maxTSigChanges = 3;
     public static int maxTempoChanges = 3;
-    public static int maxBars = 50;
+    public static int maxBars = 20;
     public static int minTempo = 50;
     public static int maxTempo = 200;
     public static int maxBeats = 32;

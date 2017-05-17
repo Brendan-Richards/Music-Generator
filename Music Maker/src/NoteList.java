@@ -23,7 +23,7 @@ public class NoteList {
         "Gb7","G7","Ab7","A7","Bb7",
         "B7","C8","Db8","D8","Eb8",
         "E8","F8","Gb8","G8","Ab8",
-        "A8","Bb8","B8",};
+        "A8","Bb8","B8"};
     
     public static final double C0 = 16.3516;
     public static final double Db0 = 17.323916733725454;

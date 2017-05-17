@@ -59,7 +59,7 @@ public class Note {
                         high = i;
                 }
                 
-                num = Song.rand.nextInt(high+1)+low;
+                num = Song.rand.nextInt(high+1-low)+low;
                 
                 if(isChord)
                     chordNotes.add(NoteList.notes[num]);

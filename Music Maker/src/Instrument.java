@@ -28,7 +28,7 @@ public class Instrument {
             }
             case 3:{
                 name = "alto saxophone";
-                canPlayChords = true;
+                canPlayChords = false;
                 range = new String[]{"Db3", "Ab5"};
                 break;
             }
