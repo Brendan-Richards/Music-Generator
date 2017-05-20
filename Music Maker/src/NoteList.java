@@ -1,5 +1,5 @@
 public class NoteList {
-    public static final int numberOfNotes = 96;
+    public static final int numberOfNotes = NoteList.notes.length;
     
     public static String[] notes = new String[]{ 
         "C0","Db0","D0","Eb0","E0",
