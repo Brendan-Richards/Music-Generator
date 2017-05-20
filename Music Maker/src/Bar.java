@@ -18,6 +18,13 @@ public class Bar {
             makeNotes();
     }
     
+    //if we already have the note for the beat, we use this constructor
+    public Bar(TSig t, Beat b){
+        beats = new ArrayList();
+        beats.add(b);
+        tSig = t;
+    }
+    
     private void makeNotes(){
         float totalBeats = 0;
  
@@ -143,7 +150,7 @@ public class Bar {
             while(possibleNotes[val].equals(temp.name)){
                 val = Song.rand.nextInt(possibleNotes.length);
             }
-            theNotes[i] = new SingleNote(temp.type, possibleNotes[val], temp.volume);
+            theNotes[i] = new SingleNote(temp.type, false, possibleNotes[val], temp.volume);
         }
         
         return theNotes;

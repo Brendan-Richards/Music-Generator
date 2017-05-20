@@ -60,17 +60,71 @@ public class Section {
                     high = k+1;
             }   
             
+            //get new instrument's range
             possibleNotes = Arrays.copyOfRange(NoteList.notes, low, high);
-            parts[i].bars.add(new Bar(tSig, possibleNotes, false));  
+            
+            //add all the new bars
+            for(int m=0; m<sectionLength; m++){
+                parts[i].bars.add(new Bar(tSig, possibleNotes, false));  
+            }
         }     
     }
     
     private void makeMultiMelody(InstrumentPart[] parts){
+        
+        int low=0, high=NoteList.notes.length;
+        
+        for(int i=0; i<parts.length; i++){
+            
+            for(int j=0, k=NoteList.notes.length-1; j<NoteList.notes.length; j++, k-- ){
+                if(NoteList.notes[j].equals(parts[i].instrument.range[0]))
+                    low = j;
+                if(NoteList.notes[k].equals(parts[i].instrument.range[1]))
+                    high = k+1;
+            }   
+            
+            //get new instrument's range
+            String[] possibleNotes = Arrays.copyOfRange(NoteList.notes, low, high);
+            
+            //add all the new bars
+            for(int m=0; m<sectionLength; m++){
+                parts[i].bars.add(new Bar(tSig, possibleNotes, false));  
+            }
+        } 
     
     }
     
     private void makeSolo(InstrumentPart[] parts){
     
+        int soloGuy = Song.rand.nextInt(parts.length);
+        
+        int low=0, high=NoteList.notes.length;
+        
+        for(int j=0, k=NoteList.notes.length-1; j<NoteList.notes.length; j++, k-- ){
+            if(NoteList.notes[j].equals(parts[soloGuy].instrument.range[0]))
+                low = j;
+            if(NoteList.notes[k].equals(parts[soloGuy].instrument.range[1]))
+                high = k+1;
+        }   
+
+        //get new instrument's range
+        String[] possibleNotes = Arrays.copyOfRange(NoteList.notes, low, high);
+
+        //add all the new bars
+        for(int m=0; m<sectionLength; m++){
+            parts[soloGuy].bars.add(new Bar(tSig, possibleNotes, false));  
+        }
+        
+        
+        for(int i=0; i<parts.length; i++){
+            if(i==soloGuy) continue;
+            
+            for(int m=0; m<sectionLength; m++){
+                SingleNote rest = new SingleNote("whole", true, "", 0.0f);
+                Beat b = new Beat(rest);
+                parts[i].bars.add(new Bar(tSig, b));  
+            }    
+        }
     }
     
     

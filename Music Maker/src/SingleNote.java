@@ -31,9 +31,9 @@ public class SingleNote {
         } 
     }
     
-    public SingleNote(String t, String n, float v){
+    public SingleNote(String t, boolean ir, String n, float v){
         type = t;
-        isRest = false;
+        isRest = ir;
         name = n;
         volume = v;
     }
