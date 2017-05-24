@@ -6,7 +6,7 @@ import jm.constants.*;
 
 public class JMusicStuff implements JMC {
     public static void play(Song theSong){
-              
+       
         Score s = new Score("test Score");
         s.setTempo(theSong.tempo);
           
@@ -55,7 +55,8 @@ public class JMusicStuff implements JMC {
         for(int i=0; i<theSong.numParts; i++){
             s.addPart(parts[i]);
         }
-        
+ 
+       
         Write.midi(s);
         //Play.midi(s);
         

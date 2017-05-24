@@ -35,8 +35,10 @@ public class GA {
         for(int i=0; i<numParts; i++){
             insts[i] = new Instrument();
         }
+
         Song b = new Song(insts);
         b.play();
+
         
 //		while(!done){
 //			GA a = new GA();

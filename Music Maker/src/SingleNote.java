@@ -38,6 +38,7 @@ public class SingleNote {
         type = t;
         isRest = ir;
         name = n;
+        if(isRest) name = null;
         volume = v;
     }
     
