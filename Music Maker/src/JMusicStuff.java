@@ -1,76 +1,97 @@
 import jm.JMC;
 import jm.music.data.*;
 import jm.util.*;
+import java.lang.reflect.*;
+import jm.constants.*;
 
 public class JMusicStuff implements JMC {
     public static void play(Song theSong){
-        
+              
         Score s = new Score("test Score");
-        s.setTempo(100);
-//        Part[] parts = new Part[theSong.numParts];
-//        
-//        for(int i=0; i<theSong.numParts; i++){
-//            parts[i] = new Part(theSong.parts[i].instrument.name); 
-//        }
-        Part p1 = new Part("Guitar", GUITAR, 0);
-        Part p2 = new Part("piano", PIANO, 1 );
-
+        s.setTempo(theSong.tempo);
+          
+        Part[] parts = new Part[theSong.numParts];
+          
+        for(int i=0; i<theSong.numParts; i++){
+            if(theSong.parts[i].instrument.name.equals("guitar")){
+                parts[i] = new Part("guitar" + i, GUITAR, i); 
+            }
+            else
+                parts[i] = new Part("piano" + i, PIANO, i); 
+        }
         
-		Phrase phr1 = new Phrase();
-        phr1.addNote(new Note(E4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(FS4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(G4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(FS4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(G4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(A4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(G4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(FS4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(B4, EIGHTH_NOTE));
-        phr1.addNote(new Note(G4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(FS4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(G4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(FS4, SIXTEENTH_NOTE));
-        phr1.addNote(new Note(E4, EIGHTH_NOTE));
-        phr1.addNoteList(phr1.getNoteArray());
-        phr1.addNoteList(phr1.getNoteArray());
-
+        //add notes to parts
+        for(int i=0; i<theSong.numParts; i++){
+            for(int j=0; j<theSong.parts[i].bars.size(); j++){
+                if(!theSong.parts[i].bars.get(j).isChordProg){
+                    Phrase phr = new Phrase();
+                    for(int k=0; k<theSong.parts[i].bars.get(j).beats.size(); k++){
+                        String noteName = theSong.parts[i].bars.get(j).beats.get(k).notes.get(0).name;
+                        //System.out.println("beat is a single note, noteName is: " + noteName);
+                        String noteType = theSong.parts[i].bars.get(j).beats.get(k).notes.get(0).type;
+                        Note n = makeNote(noteName, noteType);
+                        phr.addNote(n);
+                    }
+                    parts[i].add(phr);
+                }
+                else{
+                    CPhrase phr2 = new CPhrase();
+                    //make the chords and add to the cphrase and add cphrase to part 
+                    for(int k=0; k<theSong.parts[i].bars.get(j).beats.size(); k++){         
+                        Note[] chordNotes = new Note[theSong.parts[i].bars.get(j).beats.get(k).notes.size()];
+                        for(int m=0; m<theSong.parts[i].bars.get(j).beats.get(k).notes.size(); m++){
+                            String noteName = theSong.parts[i].bars.get(j).beats.get(k).notes.get(m).name;
+                            //System.out.println("beat is a chord, noteName is: " + noteName);
+                            String noteType = theSong.parts[i].bars.get(j).beats.get(k).notes.get(m).type;
+                            chordNotes[m] = makeNote(noteName, noteType);
+                        }
+                        phr2.addChord(chordNotes);
+                    }
+                    parts[i].addCPhrase(phr2);
+                }
+            }
+        }
         
-        CPhrase phr2 = new CPhrase();
-
-        phr2.addChord(new Note[]{new Note(E4, WHOLE_NOTE), new Note(B5, WHOLE_NOTE), new Note(E5, WHOLE_NOTE)});
-        phr2.addChord(new Note[]{new Note(C4, WHOLE_NOTE), new Note(G3, WHOLE_NOTE), new Note(C5, WHOLE_NOTE)});
-        phr2.addChord(new Note[]{new Note(D4, WHOLE_NOTE), new Note(A5, WHOLE_NOTE), new Note(D5, WHOLE_NOTE)});
-        phr2.addChord(new Note[]{new Note(D4, WHOLE_NOTE), new Note(A5, WHOLE_NOTE), new Note(D5, WHOLE_NOTE)});
+        for(int i=0; i<theSong.numParts; i++){
+            s.addPart(parts[i]);
+        }
         
-        
-        Phrase phr3 = new Phrase();
-        phr3.add(new Note(G5, WHOLE_NOTE));
-        phr3.add(new Note(E5, WHOLE_NOTE));
-        phr3.add(new Note(FS5, WHOLE_NOTE));
-        phr3.add(new Note(EF5, WHOLE_NOTE));
-
-        
-        CPhrase phr4 = new CPhrase();
-        phr4.addChord(new Note[]{new Note(E4, WHOLE_NOTE), new Note(B5, WHOLE_NOTE), new Note(E5, WHOLE_NOTE)});
-        phr4.addChord(new Note[]{new Note(C4, WHOLE_NOTE), new Note(G3, WHOLE_NOTE), new Note(C5, WHOLE_NOTE)});
-        phr4.addChord(new Note[]{new Note(D4, WHOLE_NOTE), new Note(A5, WHOLE_NOTE), new Note(D5, WHOLE_NOTE)});
-        phr4.addChord(new Note[]{new Note(B4, WHOLE_NOTE), new Note(FS5, WHOLE_NOTE), new Note(B5, WHOLE_NOTE)});   
-        
-//        phr1.setTempo(100);
-//        phr2.setTempo(100);
-//        phr3.setTempo(140);
-//        phr4.setTempo(140);
-        
-        p1.addPhrase(phr1);
-        p1.addPhrase(phr3);
-        p2.addCPhrase(phr2);
-        p2.addCPhrase(phr4);
-		s.addPart(p1);
-        s.addPart(p2);
-        
-        System.out.println(s.getNumerator() + "/" + s.getDenominator());
-        System.out.println(s.getTempo());
-        //Write.midi(s);
+        Write.midi(s);
         //Play.midi(s);
+        
+    }
+    
+    private static Note makeNote(String noteName, String noteType){
+ 
+        String newName = "";
+        
+        if(noteName != null) newName = noteName.replace('b', 'F');
+        
+        Class c = Pitches.class;
+        
+        int theName = 0;
+        Field f = null;
+        try{
+            if(noteName != null){ 
+                newName = noteName.replace('b', 'F');
+                f =  c.getDeclaredField(newName);
+                theName = f.getInt(new JMusicStuff());
+            }
+            else{
+                theName = REST;
+            }
+            switch(noteType){
+                case "whole": return new Note(theName, 4.0);
+                case "half": return new Note(theName, 2.0);
+                case "quarter": return new Note(theName, 1.0);
+                case "eighth": return new Note(theName, 0.5);
+                case "sixteenth": return new Note(theName, 0.25);
+                case "thirty-second":  return new Note(theName, 0.125);
+            }
+            return new Note(theName, 12);
+        }catch(Exception x){
+            System.out.println("couldnt find field or something");
+        }
+        return null;
     }
 }

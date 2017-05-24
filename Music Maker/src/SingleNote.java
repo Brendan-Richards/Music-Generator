@@ -21,7 +21,10 @@ public class SingleNote {
         }
 
         float chance = Song.rand.nextFloat();
-        if(chance < restChance) isRest = true;
+        if(chance < restChance) {
+            isRest = true;
+            name = null;
+        }
         else isRest = false;
 
         if(!isRest){

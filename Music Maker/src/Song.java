@@ -9,6 +9,7 @@ public class Song {
     public int numParts;
     private float length;
     public int numberOfSections;
+    public int tempo;
     private TSigChange[] tSigChanges;
     private int numTSigChanges;
     private TempoChange[] tempoChanges;
@@ -40,7 +41,7 @@ public class Song {
 //while the 2 argument constructor crosses 2 parents' genes to make a song
 	public Song(Instrument[] insts){
 
-            int startTempo = rand.nextInt(maxTempo-minTempo)+minTempo;
+            tempo = rand.nextInt(maxTempo-minTempo)+minTempo;
             
             int bottom = (int)Math.pow(2, (rand.nextInt(3)+2));
             int top = rand.nextInt(maxBeats)+1;

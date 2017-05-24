@@ -36,7 +36,7 @@ public class GA {
             insts[i] = new Instrument();
         }
         Song b = new Song(insts);
-        //b.play();
+        b.play();
         
 //		while(!done){
 //			GA a = new GA();

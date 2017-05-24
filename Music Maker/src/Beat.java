@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Beat {
-    public ArrayList notes;
+    public ArrayList<SingleNote> notes;
     public String type;
     public boolean isChord;
     

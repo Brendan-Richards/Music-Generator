@@ -6,11 +6,13 @@ public class Bar {
     public int tempo;
     private Instrument instrument;
     String[] possibleNotes;
+    boolean isChordProg;
     
     public Bar(TSig t, String[] notes, boolean isChordProgression){
         tSig = t;
         possibleNotes = notes;
         beats = new ArrayList();
+        isChordProg = isChordProgression;
         
         if(isChordProgression)
             makeChords();
@@ -29,7 +31,7 @@ public class Bar {
         float totalBeats = 0;
  
         while(totalBeats < tSig.top){
-            System.out.println("        making note");
+            //System.out.println("        making note");
             boolean found = false;
 
             while(!found){
@@ -68,7 +70,7 @@ public class Bar {
         float totalBeats = 0;
  
         while(totalBeats < tSig.top){
-            System.out.println("        making note");
+            //System.out.println("        making note");
             boolean found = false;
 
             while(!found){
