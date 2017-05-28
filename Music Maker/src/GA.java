@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GA {
 
-	protected static int target;//the value that the user wants to find a formula for
+	protected static int target;//the fitness value that is acceptable
         
     private static final Scanner keyboard = new Scanner(System.in);
 	
@@ -25,6 +25,8 @@ public class GA {
 	private int maxGenerations = 999;//number of Individuals in the population
 
 	private final int populationSize = 100;
+    
+    public static int maxBeats = 32;
 
 	
 /////////////////////////////////////////////////////////////////////////
@@ -36,33 +38,43 @@ public class GA {
             insts[i] = new Instrument();
         }
 
-        Song b = new Song(insts);
-        b.play();
+        int bottom = (int)Math.pow(2, (Song.rand.nextInt(3)+2));
+        int top = Song.rand.nextInt(maxBeats)+1;
+//        int top = 4;
+//        int bottom = 4;
+        
+//        Song b = new Song(insts, top, bottom);
+//        Song c = new Song(insts, top, bottom);
+//        b.save("parent1");
+//        c.save("parent2");
+//        Song d = new Song(b, c);
+//        d.save("child");
 
         
-//		while(!done){
-//			GA a = new GA();
-//			//get the target value from the user
-//			a.getTarget();
-//            //time the GA run by getting the start and end times
-//            long start = System.nanoTime();
-//			//run the genetic algorithm
-//			a.runGA();
-//            
-//            long end = System.nanoTime();
-//		}
+		while(!done){
+			GA a = new GA();
+			//get the target value from the user
+			a.getTarget();
+            //time the GA run by getting the start and end times
+            long start = System.nanoTime();
+			//run the genetic algorithm
+			a.runGA(insts, top, bottom);
+            
+            long end = System.nanoTime();
+		}
 		
 	}//main
 
 ///////////////////////////////////////////////////////////////////////
 //gets the user's value and stores it
 	private void getTarget(){
-		
+		System.out.println("Target fitness value: ");
+        target = keyboard.nextInt();
 	}//getTarget
 ///////////////////////////////////////////////////////////////////////	
  //main GA loop
-	private void runGA(){
-		createInitialPopulation();
+	private void runGA(Instrument[] insts, int top, int bottom){
+		createInitialPopulation(insts, top, bottom);
 		
 		while(!targetReached && generationCount < maxGenerations){
 			createNextGeneration();
@@ -125,13 +137,12 @@ public class GA {
 //////////////////////////////////////////////////////////////////////
 //this method only creates generation 1
 //all the individuals are given random formulas
-	private void createInitialPopulation(){
+	private void createInitialPopulation(Instrument[] insts, int top, int bottom){
 		
 		population = new Song[populationSize];
 		
-		//uses the individual's no-argument constructor, which makes random formulas
 		for(int i=0; i<populationSize; i++){
-			//population[i] = new Song();
+			population[i] = new Song(insts, top, bottom);
 		}
 	}//createInitialPopulation
 }
