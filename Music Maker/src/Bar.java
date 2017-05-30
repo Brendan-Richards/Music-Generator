@@ -141,7 +141,7 @@ public class Bar {
         }
     }
     
-    private SingleNote[] getOtherNotes(SingleNote temp){
+    public SingleNote[] getOtherNotes(SingleNote temp){
         int num = Song.rand.nextInt(5)+2;
         
         SingleNote[] theNotes = new SingleNote[num];
@@ -153,6 +153,24 @@ public class Bar {
                 val = Song.rand.nextInt(possibleNotes.length);
             }
             theNotes[i] = new SingleNote(temp.type, false, possibleNotes[val], temp.volume);
+        }
+        
+        return theNotes;
+    }
+    
+    //needed a static method to call from song. This code duplication is awful. fix later?
+    public static SingleNote[] getOthers(SingleNote temp, String[] possibles){
+        int num = Song.rand.nextInt(5)+2;
+        
+        SingleNote[] theNotes = new SingleNote[num];
+        theNotes[0] = temp;
+        
+        for(int i=1; i<num; i++){
+            int val = Song.rand.nextInt(possibles.length);
+            while(possibles[val].equals(temp.name)){
+                val = Song.rand.nextInt(possibles.length);
+            }
+            theNotes[i] = new SingleNote(temp.type, false, possibles[val], temp.volume);
         }
         
         return theNotes;

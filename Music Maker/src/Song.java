@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Song {
     
@@ -6,6 +8,7 @@ public class Song {
     public InstrumentPart[] parts;
     public Section[] sections;
     private static String[] sectionTypes = {"ChordMelody", "MultiMelody", "Solo"};
+    private static float mutationChance = .1f;
     public int numParts;
     private float length;
     public int numberOfSections;
@@ -25,6 +28,7 @@ public class Song {
     public static int minTempo = 50;
     public static int maxTempo = 200;
     public static int maxBeats = 32;
+    private int numberOfNoteMutations = 5;
 	
     public static Random rand = new Random();	
 	
@@ -58,7 +62,11 @@ public class Song {
             int num = rand.nextInt(sectionTypes.length);
             sections[i] = new Section(sectionTypes[num], parts, firstTSig);
         }  
+        
+        findnumBeats();
             
+        mutate();
+        calcFitness();
 	}
 	
 	public Song(Song a, Song b){
@@ -94,8 +102,16 @@ public class Song {
             parts[i] = new InstrumentPart(a.parts[i], b.parts[i], c1, c2, choice1, choice2);
         }
         
-        System.out.println("Time Signiture of child: " + this.firstTSig.top + "/" + this.firstTSig.bottom);
+        findnumBeats();
+        
+        //System.out.println("Time Signiture of child: " + this.firstTSig.top + "/" + this.firstTSig.bottom);
+        mutate();
+        calcFitness();
 	}
+    
+    private void findnumBeats(){
+        
+    }
     
 //plays the song using JFugue
     public void play(){
@@ -105,12 +121,6 @@ public class Song {
         JMusicStuff.save(this, fileName);
     }
 
-/////////////////////////////////////////////////////////////////
-//this method takes 2 individuals and crosses their 
-//genes to make a child
-	private void crossover(Song a, Song b) {
-
-	}
 ////////////////////////////////////////////////////////////////
 //fitness is calculated in the following way:
 	private void calcFitness() {
@@ -120,6 +130,74 @@ public class Song {
 ///////////////////////////////////////////////////////////////////
 //mutates an individual
 	private void mutate() {
+        
+        float chance = rand.nextFloat();
+        
+        if(chance < mutationChance){
+            int mutationType = rand.nextInt(2);
+
+            switch(mutationType){
+                case 0:{//individual note changes
+                    for(int i=0; i<parts.length; i++){
+                        int low=0, high=0;
+                        for(int j=0, k=NoteList.notes.length-1; j<NoteList.notes.length; j++, k-- ){
+                            if(NoteList.notes[j].equals(parts[i].instrument.range[0]))
+                                low = j;
+                            if(NoteList.notes[k].equals(parts[i].instrument.range[1]))
+                                high = k+1;
+                        }   
+                        //get instrument's range
+                        String[] possibleNotes = Arrays.copyOfRange(NoteList.notes, low, high);
+                        
+                        for(int m=0; m<numberOfNoteMutations; m++){
+                            //randomly select a bar
+                            int a = rand.nextInt(parts[i].bars.size());
+                            //randomly select a beat from within that bar
+                            int b = rand.nextInt(parts[i].bars.get(a).beats.size());
+                            
+                            boolean makeChord = rand.nextBoolean();
+                            
+                            if(!makeChord){                             
+                                SingleNote n = new SingleNote(possibleNotes);
+                                n.type = parts[i].bars.get(a).beats.get(b).type;
+                                
+                                Beat c = new Beat(n);
+                                parts[i].bars.get(a).beats.set(b, c);
+                                
+                            }else{
+                                SingleNote n = new SingleNote(possibleNotes);
+                                n.type = parts[i].bars.get(a).beats.get(b).type;
+                                if(!n.isRest){
+                                    SingleNote[] myNotes = Bar.getOthers(n, possibleNotes);
+                                    Beat c = new Beat(myNotes);
+                                    parts[i].bars.get(a).beats.set(b, c);
+                                }else{
+                                    Beat c = new Beat(n);
+                                    parts[i].bars.get(a).beats.set(b, c);
+                                }
+                              
+                            }
+                            
+                        }
+                    }
+                }
+                case 1:{//bar swaps
+                    //swap 2 bars in each part
+                    for(int i=0; i<parts.length; i++){
+                        int first = rand.nextInt(this.parts[i].bars.size());
+                        int second;
+                        do{
+                            second = rand.nextInt(this.parts[i].bars.size());
+                        }while(second == first);
+                        
+                        Bar temp = this.parts[i].bars.get(first);
+                        this.parts[i].bars.set(first, this.parts[i].bars.get(second));
+                        this.parts[i].bars.set(second, temp);
+                    }
+                }
+
+            }        
+        }
 
 	}
 }

@@ -22,7 +22,7 @@ public class GA {
 	private Song []population,//holds the current population
 			newPopulation;//used to temporarily store the new population
 	
-	private int maxGenerations = 999;//number of Individuals in the population
+	private int maxGenerations = 1000;//number of Individuals in the population
 
 	private final int populationSize = 100;
     
@@ -40,9 +40,9 @@ public class GA {
 
         int bottom = (int)Math.pow(2, (Song.rand.nextInt(3)+2));
         int top = Song.rand.nextInt(maxBeats)+1;
+        
 //        int top = 4;
 //        int bottom = 4;
-        
 //        Song b = new Song(insts, top, bottom);
 //        Song c = new Song(insts, top, bottom);
 //        b.save("parent1");
@@ -96,7 +96,7 @@ public class GA {
 			newPopulation[i] = new Song(population[parent1], population[parent2]);
 			
 			//if the current guys formula is a solution, change our flag variable
-			if(newPopulation[i].fitness == 0){
+			if(newPopulation[i].fitness >= target){
 				targetReached = true;
 				solutionGuy = i;
 			} 
@@ -105,15 +105,14 @@ public class GA {
 		population = newPopulation;
 		generationCount++;
 		
-
 	}//createNextGeneration
 
 /////////////////////////////////////////////////////////////////////
 //selects one parent using a tournament
 	private int selectParent() {
 		
-	     int parent, //the index of the parent we want to return
-	     tourneySize = 2;
+	     int parent = 0, //the index of the parent we want to return
+	     tourneySize = 20;
 	     
 	     //array to hold the participants' indexes
 	     int []tourneyGuys = new int[tourneySize];
@@ -123,11 +122,9 @@ public class GA {
 	          tourneyGuys[i] = Song.rand.nextInt(populationSize);
 	     }
 	     
-	     parent = 0;
-	     
 	     //find participant with highest fitness
 	     for(int i=0; i<tourneySize; i++)
-	           if(population[tourneyGuys[i]].fitness < population[tourneyGuys[parent]].fitness)
+	           if(population[tourneyGuys[i]].fitness > population[tourneyGuys[parent]].fitness)
 	                parent = i;
 	     
 	     //return winners index

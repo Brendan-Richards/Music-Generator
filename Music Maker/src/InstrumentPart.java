@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class InstrumentPart {
     public ArrayList<Bar> bars;
     public Instrument instrument;
+    public int numBeats;
        
     public InstrumentPart(Instrument instr){
         instrument = instr; 
