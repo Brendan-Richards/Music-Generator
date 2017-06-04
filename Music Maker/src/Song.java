@@ -134,6 +134,9 @@ public class Song {
         float chance = rand.nextFloat();
         
         if(chance < mutationChance){
+            
+            System.out.println("doing mutation....");
+            
             int mutationType = rand.nextInt(2);
 
             switch(mutationType){
@@ -154,6 +157,9 @@ public class Song {
                             int a = rand.nextInt(parts[i].bars.size());
                             //randomly select a beat from within that bar
                             int b = rand.nextInt(parts[i].bars.get(a).beats.size());
+                            
+                            System.out.println("mutating part " + (i+1) + " by changing note " + (b+1) + " in bar " + (a+1));
+
                             
                             boolean makeChord = rand.nextBoolean();
                             
@@ -193,6 +199,8 @@ public class Song {
                         Bar temp = this.parts[i].bars.get(first);
                         this.parts[i].bars.set(first, this.parts[i].bars.get(second));
                         this.parts[i].bars.set(second, temp);
+                        
+                        System.out.println("mutating part " + (i+1) + " by swapping bars " + (first+1) + " and " + (second+1));
                     }
                 }
 
@@ -200,6 +208,62 @@ public class Song {
         }
 
 	}
+    
+    
+    public String toString(){
+        String theString = "";
+        
+        String[] partStrings = new String[this.parts.length];
+    
+        for(int l=0; l<partStrings.length; l++){
+            partStrings[l] = "";
+        }
+        
+        for(int i=0; i<this.parts[0].bars.size(); i++){
+            
+            String[] barStrings = new String[this.parts.length];
+            
+            for(int l=0; l<barStrings.length; l++){
+                barStrings[l] = "";
+            }
+            
+            for(int j=0; j<this.parts.length; j++){
+                for(int k=0; k<this.parts[j].bars.get(i).beats.size(); k++){
+                    for(int m=0; m<this.parts[j].bars.get(i).beats.get(k).notes.size(); m++){
+                        barStrings[j] += this.parts[j].bars.get(i).beats.get(k).notes.get(m).name;
+                    }
+                    barStrings[j] += " ";
+                }
+            }
+            
+            int maxLength = 0;
+            for(int t=0; t<barStrings.length; t++){
+                if(barStrings[t].length() > maxLength)
+                    maxLength = barStrings[t].length();
+            }
+            
+            for(int t=0; t<barStrings.length; t++){
+                int difference = maxLength - barStrings[t].length();
+                
+                for(int h=0; h<difference; h++){
+                    barStrings[t] += " ";
+                }
+                
+                barStrings[t] += "|";
+            }
+            
+            for(int t=0; t<barStrings.length; t++){
+                partStrings[t] += barStrings[t];
+            }            
+            
+        }
+        
+        for(int f=0; f<partStrings.length; f++){
+            theString += partStrings[f] + "\n"; 
+        }        
+        
+        return theString;
+    }
 }
 
 
