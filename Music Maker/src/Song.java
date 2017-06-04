@@ -8,7 +8,7 @@ public class Song {
     public InstrumentPart[] parts;
     public Section[] sections;
     private static String[] sectionTypes = {"ChordMelody", "MultiMelody", "Solo"};
-    private static float mutationChance = .1f;
+    private static float mutationChance = 1.0f;
     public int numParts;
     private float length;
     public int numberOfSections;
@@ -28,7 +28,7 @@ public class Song {
     public static int minTempo = 50;
     public static int maxTempo = 200;
     public static int maxBeats = 32;
-    private int numberOfNoteMutations = 5;
+    private int numberOfNoteMutations = 2;
 	
     public static Random rand = new Random();	
 	
@@ -62,10 +62,8 @@ public class Song {
             int num = rand.nextInt(sectionTypes.length);
             sections[i] = new Section(sectionTypes[num], parts, firstTSig);
         }  
-        
-        findnumBeats();
             
-        mutate();
+        mutate();   
         calcFitness();
 	}
 	
@@ -91,8 +89,18 @@ public class Song {
         
         parts = new InstrumentPart[numParts];
         
-        int c1 = rand.nextInt(a.parts[0].bars.size()-1)+1;
-        int c2 = rand.nextInt(b.parts[0].bars.size()-1)+1;
+        if(a.parts[0].bars.size()==0){
+            System.out.println();
+            System.out.println();            
+        }
+        
+        int c1, c2;
+        
+        if(a.parts[0].bars.size()==1) c1 = 0;
+        else c1 = rand.nextInt(a.parts[0].bars.size()-1)+1;
+        if(b.parts[0].bars.size()==1) c2 = 0;
+        else c2 = rand.nextInt(b.parts[0].bars.size()-1)+1;
+        
         int choice1 = Song.rand.nextInt(2);//if 0 the begginning until c1 is copied,
                                            //if 1, then c1 to the end is copied from parent
         int choice2 = Song.rand.nextInt(2);
@@ -102,16 +110,18 @@ public class Song {
             parts[i] = new InstrumentPart(a.parts[i], b.parts[i], c1, c2, choice1, choice2);
         }
         
-        findnumBeats();
+        //System.out.println("Time Signiture of child: " + this.firstTSig.top + "/" + this.firstTSig.bottom);     
+//        System.out.println("parent 1: ");
+//        System.out.println(a.toString());
+//        System.out.println("parent 2: ");
+//        System.out.println(b.toString());
+//        System.out.println("child: ");
+//        System.out.println(this.toString());
         
-        //System.out.println("Time Signiture of child: " + this.firstTSig.top + "/" + this.firstTSig.bottom);
         mutate();
         calcFitness();
 	}
-    
-    private void findnumBeats(){
-        
-    }
+
     
 //plays the song using JFugue
     public void play(){

@@ -41,13 +41,15 @@ public class GA {
         int bottom = (int)Math.pow(2, (Song.rand.nextInt(3)+2));
         int top = Song.rand.nextInt(maxBeats)+1;
         
-        Song b = new Song(insts, top, bottom);
-        System.out.println(b.toString());
-//        Song c = new Song(insts, top, bottom);
-//        b.save("parent1");
-//        c.save("parent2");
-//        Song d = new Song(b, c);
-//        d.save("child");
+        top = 4;
+        bottom = 4;
+        
+        Song b = new Song(insts, top, bottom);  
+        Song c = new Song(insts, top, bottom);
+        Song d = new Song(b, c);        
+        
+
+
 
         
 //		while(!done){

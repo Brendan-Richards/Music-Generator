@@ -28,9 +28,9 @@ public class InstrumentPart {
                 for(int i=0; i<=c2; i++){
                     this.bars.add(p2.bars.get(i));
                 }                
-//                System.out.println("From parent1, copied bars: 1-" + (c1+1));
-//                System.out.println("From parent2, copied bars: 1-" + (c2+1));
-//                System.out.println("Total bars of child: " + (c1+c2+2));
+                System.out.println("From parent1, copied bars: 1-" + (c1+1));
+                System.out.println("From parent2, copied bars: 1-" + (c2+1));
+                System.out.println("Total bars of child: " + (c1+c2+2));
             }
             else{
                 for(int i=0; i<=c1; i++){
@@ -39,9 +39,9 @@ public class InstrumentPart {
                 for(int i=c2; i<p2.bars.size(); i++){
                     this.bars.add(p2.bars.get(i));
                 }  
-//                System.out.println("From parent1, copied bars: 1-" + (c1+1));
-//                System.out.println("From parent2, copied bars: " + (c2+1) + "-" + p2.bars.size());  
-//                System.out.println("Total bars of child: " + (c1+1+(p2.bars.size()-(c2+1))));
+                System.out.println("From parent1, copied bars: 1-" + (c1+1));
+                System.out.println("From parent2, copied bars: " + (c2+1) + "-" + p2.bars.size());  
+                System.out.println("Total bars of child: " + (c1+1+(p2.bars.size()-(c2+1))));
             }  
         }
         else{
@@ -52,9 +52,9 @@ public class InstrumentPart {
                 for(int i=0; i<=c2; i++){
                     this.bars.add(p2.bars.get(i));
                 } 
-//                System.out.println("From parent1, copied bars: " + (c1+1) + "-" + p1.bars.size());
-//                System.out.println("From parent2, copied bars: 1-" + (c2+1)); 
-//                System.out.println("Total bars of child: " + ((p1.bars.size()-(c1+1))+c2+1));
+                System.out.println("From parent1, copied bars: " + (c1+1) + "-" + p1.bars.size());
+                System.out.println("From parent2, copied bars: 1-" + (c2+1)); 
+                System.out.println("Total bars of child: " + ((p1.bars.size()-(c1+1))+c2+1));
             }
             else{
                 for(int i=c1; i<p1.bars.size(); i++){
@@ -63,9 +63,9 @@ public class InstrumentPart {
                 for(int i=c2; i<p2.bars.size(); i++){
                     this.bars.add(p2.bars.get(i));
                 }   
-//                System.out.println("From parent1, copied bars: " + (c1+1) + "-" + p1.bars.size());
-//                System.out.println("From parent2, copied bars: " + (c2+1) + "-" + p2.bars.size()); 
-//                System.out.println("Total bars of child: " + ((p1.bars.size()-(c1+1))+(p2.bars.size()-(c2+1))));
+                System.out.println("From parent1, copied bars: " + (c1+1) + "-" + p1.bars.size());
+                System.out.println("From parent2, copied bars: " + (c2+1) + "-" + p2.bars.size()); 
+                System.out.println("Total bars of child: " + ((p1.bars.size()-(c1+1))+(p2.bars.size()-(c2+1))));
             }            
         }        
     }
