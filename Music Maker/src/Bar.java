@@ -77,7 +77,7 @@ public class Bar {
                 SingleNote temp = new SingleNote(possibleNotes);
                 switch(temp.type){
                     case "whole": {
-                        if(canAdd("whole", totalBeats)){ 
+                        if(!temp.isRest && canAdd("whole", totalBeats)){ 
                             found = true; 
                             totalBeats += tSig.bottom; 
                             beats.add(new Beat(getOtherNotes(temp))); 
@@ -87,7 +87,7 @@ public class Bar {
                          break;
                     }
                     case "half":{
-                        if(canAdd("half", totalBeats)){ 
+                        if(!temp.isRest && canAdd("half", totalBeats)){ 
                             found = true; 
                             totalBeats += (float)(tSig.bottom/2); 
                             beats.add(new Beat(getOtherNotes(temp))); 
@@ -97,7 +97,7 @@ public class Bar {
                          break;
                     }
                     case "quarter":{
-                        if(canAdd("quarter", totalBeats)){ 
+                        if(!temp.isRest && canAdd("quarter", totalBeats)){ 
                             found = true; 
                             totalBeats += (float)(tSig.bottom/4); 
                             beats.add(new Beat(getOtherNotes(temp))); 
@@ -107,7 +107,7 @@ public class Bar {
                          break;
                     }
                     case "eighth":{
-                        if(canAdd("eighth", totalBeats)){ 
+                        if(!temp.isRest && canAdd("eighth", totalBeats)){ 
                             found = true; 
                             totalBeats += (float)(tSig.bottom/8); 
                             beats.add(new Beat(getOtherNotes(temp))); 
@@ -117,7 +117,7 @@ public class Bar {
                          break;
                     }
                     case "sixteenth":{
-                        if(canAdd("sixteenth", totalBeats)){ 
+                        if(!temp.isRest && canAdd("sixteenth", totalBeats)){ 
                             found = true; 
                             totalBeats += (float)(tSig.bottom/16); 
                             beats.add(new Beat(getOtherNotes(temp))); 
@@ -127,7 +127,7 @@ public class Bar {
                          break;
                     }
                     case "thirty-second":{
-                        if(canAdd("thirty-second", totalBeats)){ 
+                        if(!temp.isRest && canAdd("thirty-second", totalBeats)){ 
                             found = true; 
                             totalBeats += (float)(tSig.bottom/32); 
                             beats.add(new Beat(getOtherNotes(temp))); 

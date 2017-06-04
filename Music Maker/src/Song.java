@@ -234,6 +234,8 @@ public class Song {
                 for(int k=0; k<this.parts[j].bars.get(i).beats.size(); k++){
                     for(int m=0; m<this.parts[j].bars.get(i).beats.get(k).notes.size(); m++){
                         
+                        if(m>0) barStrings[j] += "/";
+                        
                         String theName = this.parts[j].bars.get(i).beats.get(k).notes.get(m).name;
                         if(theName == null) barStrings[j] += "R";
                         else barStrings[j] += theName;
