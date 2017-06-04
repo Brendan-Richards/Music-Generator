@@ -16,14 +16,20 @@ public class Section {
         type = t;
         tSig = timeSig;
         range[0] = parts[0].bars.size();
-        range[1] = Song.rand.nextInt(maxSectionLength)+range[0];
         
-        sectionLength = range[1]-range[0]+1;
-        
-        switch(type){
-            case "ChordMelody":{ makeChordMelody(parts); break; } 
-            case "MultiMelody":{ makeMultiMelody(parts); break; }
-            case "Solo": { makeSolo(parts); break; }
+        if(range[0] < Song.maxBars){
+            if(range[0] + maxSectionLength > Song.maxBars)
+                range[1] = Song.rand.nextInt(Song.maxBars-range[0])+range[0];
+            else
+                range[1] = Song.rand.nextInt(maxSectionLength)+range[0];
+
+            sectionLength = range[1]-range[0]+1;
+
+            switch(type){
+                case "ChordMelody":{ makeChordMelody(parts); break; } 
+                case "MultiMelody":{ makeMultiMelody(parts); break; }
+                case "Solo": { makeSolo(parts); break; }
+            }
         }
     }
     

@@ -24,7 +24,7 @@ public class Song {
     public static int maxTSigChanges = 3;
     public static int maxTempoChanges = 3;
     public static int maxSections = 5;
-    public static int maxBars = 20;
+    public static int maxBars = 5;
     public static int minTempo = 50;
     public static int maxTempo = 200;
     public static int maxBeats = 32;
@@ -153,12 +153,13 @@ public class Song {
                         String[] possibleNotes = Arrays.copyOfRange(NoteList.notes, low, high);
                         
                         for(int m=0; m<numberOfNoteMutations; m++){
+                            System.out.println("m is: " + m);
                             //randomly select a bar
                             int a = rand.nextInt(parts[i].bars.size());
                             //randomly select a beat from within that bar
                             int b = rand.nextInt(parts[i].bars.get(a).beats.size());
                             
-                            System.out.println("mutating part " + (i+1) + " by changing note " + (b+1) + " in bar " + (a+1));
+                            System.out.println("mutating part " + (i+1) + " by changing beat " + (b+1) + " in bar " + (a+1));
 
                             
                             boolean makeChord = rand.nextBoolean();
@@ -186,15 +187,16 @@ public class Song {
                             
                         }
                     }
+                    break;
                 }
                 case 1:{//bar swaps
                     //swap 2 bars in each part
                     for(int i=0; i<parts.length; i++){
                         int first = rand.nextInt(this.parts[i].bars.size());
-                        int second;
+                        int second = 0;
                         do{
                             second = rand.nextInt(this.parts[i].bars.size());
-                        }while(second == first);
+                        }while(second == first && this.parts[i].bars.size()>1);
                         
                         Bar temp = this.parts[i].bars.get(first);
                         this.parts[i].bars.set(first, this.parts[i].bars.get(second));
@@ -202,6 +204,7 @@ public class Song {
                         
                         System.out.println("mutating part " + (i+1) + " by swapping bars " + (first+1) + " and " + (second+1));
                     }
+                    break;
                 }
 
             }        
@@ -230,7 +233,11 @@ public class Song {
             for(int j=0; j<this.parts.length; j++){
                 for(int k=0; k<this.parts[j].bars.get(i).beats.size(); k++){
                     for(int m=0; m<this.parts[j].bars.get(i).beats.get(k).notes.size(); m++){
-                        barStrings[j] += this.parts[j].bars.get(i).beats.get(k).notes.get(m).name;
+                        
+                        String theName = this.parts[j].bars.get(i).beats.get(k).notes.get(m).name;
+                        if(theName == null) barStrings[j] += "R";
+                        else barStrings[j] += theName;
+                        
                     }
                     barStrings[j] += " ";
                 }
@@ -258,8 +265,12 @@ public class Song {
             
         }
         
-        for(int f=0; f<partStrings.length; f++){
-            theString += partStrings[f] + "\n"; 
+        theString += "Time Signiture: " + this.firstTSig.top + "/" + this.firstTSig.bottom + "\n";
+        theString += "Tempo: " + this.tempo + "\n";
+        theString += "Number of Parts: " + (this.parts.length) + "\n";
+        theString += "Number of bars: " + (this.parts[0].bars.size()) + "\n";
+        for(int f=0; f<partStrings.length; f++){          
+            theString += "Part " + (f+1) + ": " + partStrings[f] + "\n"; 
         }        
         
         return theString;

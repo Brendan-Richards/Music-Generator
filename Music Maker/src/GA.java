@@ -41,9 +41,8 @@ public class GA {
         int bottom = (int)Math.pow(2, (Song.rand.nextInt(3)+2));
         int top = Song.rand.nextInt(maxBeats)+1;
         
-//        int top = 4;
-//        int bottom = 4;
-//        Song b = new Song(insts, top, bottom);
+        Song b = new Song(insts, top, bottom);
+        System.out.println(b.toString());
 //        Song c = new Song(insts, top, bottom);
 //        b.save("parent1");
 //        c.save("parent2");
@@ -51,17 +50,17 @@ public class GA {
 //        d.save("child");
 
         
-		while(!done){
-			GA a = new GA();
-			//get the target value from the user
-			a.getTarget();
-            //time the GA run by getting the start and end times
-            long start = System.nanoTime();
-			//run the genetic algorithm
-			a.runGA(insts, top, bottom);
-            
-            long end = System.nanoTime();
-		}
+//		while(!done){
+//			GA a = new GA();
+//			//get the target value from the user
+//			a.getTarget();
+//            //time the GA run by getting the start and end times
+//            long start = System.nanoTime();
+//			//run the genetic algorithm
+//			a.runGA(insts, top, bottom);
+//            
+//            long end = System.nanoTime();
+//		}
 		
 	}//main
 
